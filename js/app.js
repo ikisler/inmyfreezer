@@ -5,18 +5,25 @@ then save freezers to that profile filled with foods of their choice.
 
 Created by Isabeau Kisler
 
+-- Get info from freezers and display it
+-- Create freezer/delete freezer
+-- Add item to freezer
+-- Create/delete user
+-- Login/out
+
 *****/
 
-var Freezer = function(freezerName, contents) {
-	that = this;
+var Freezer = function(freezerName, freezerContents) {
+	var that = this;
 	that.name = ko.observable(freezerName);
-	that.contents = ko.observableArray(contents);
+	that.contents = ko.observableArray(freezerContents);
 	that.selected = ko.observable(false);
+	
 };
 
 var ViewModel = function() {
-	that = this;
-	this.freezers = [{name: 'main01'},{name: 'second01'}]; //ko.observableArray();
+	var that = this;
+	this.freezers = ko.observableArray();
 	this.chosenFreezer = ko.observable();
 	this.chosenFreezerContents = ko.observableArray();
 
@@ -24,7 +31,6 @@ var ViewModel = function() {
 
 	ref.on("value", function(snapshot) {
 		//that.freezers.removeAll();
-		console.log(snapshot.val());
 
 		var info = snapshot.val();
 
@@ -37,25 +43,38 @@ var ViewModel = function() {
 				freezerContents.push({item: rawContents[i]});
 			}
 
-			that.chosenFreezer(freezer);
-			that.chosenFreezerContents(freezerContents);
-
-			//that.freezers.push({name: freezer});
-
-			//that.freezers.push(new Freezer(freezer, freezerContents));
+			that.freezers.push(new Freezer(freezer, freezerContents));
+			console.log(that.freezers()[0].name() + " " + that.freezers()[0].contents());
 
 		}
 
-		//console.log(that.freezers[0].name + " " + that.freezers[0].contents);
-		//console.log(that.freezers());
-
+		// Automatically assign the results to show the first freezer
+		that.chosenFreezer(that.freezers()[0].name());
+		that.chosenFreezerContents(that.freezers()[0].contents());
 
 	}, function (errorObject) {
 		console.log("The read failed: " + errorObject.code);
 	});
 
 	this.switchFreezer = function() {
-		console.log('switch');
+		var freezersRadio = document.getElementsByClassName('freezers-radio');
+
+		// Sort through the radio buttons and see which is checked.
+		// Then check to see which freezer matches.
+		// When a match is found, assign it to the chosenFreezer and chosenFreezerContents.
+		for(var i=0; i<freezersRadio.length; i++) {
+			if(freezersRadio[i].checked) {
+				for(var j=0; j<that.freezers().length; j++) {
+					if(freezersRadio[i].value === that.freezers()[j].name()) {
+						that.chosenFreezer(that.freezers()[j].name());
+						that.chosenFreezerContents(that.freezers()[j].contents());
+
+						return false;
+					}
+				}
+				return false;
+			}
+		}
 	};
 
 };
