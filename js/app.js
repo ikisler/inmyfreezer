@@ -6,8 +6,8 @@ then save freezers to that profile filled with foods of their choice.
 Created by Isabeau Kisler
 
 -- Get info from freezers and display it
--- Create freezer/delete freezer
 -- Add item to freezer
+-- Create freezer/delete freezer
 -- Create/delete user
 -- Login/out
 
@@ -26,17 +26,18 @@ var ViewModel = function() {
 	this.freezers = ko.observableArray();
 	this.chosenFreezer = ko.observable();
 	this.chosenFreezerContents = ko.observableArray();
+	this.info;
 
 	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/test");
 
 	ref.on("value", function(snapshot) {
 		//that.freezers.removeAll();
 
-		var info = snapshot.val();
+		that.info = snapshot.val();
 
 
-		for(freezer in info) {
-			var rawContents = info[freezer].split(',');
+		for(freezer in that.info) {
+			var rawContents = that.info[freezer].split(',');
 			var freezerContents = [];
 
 			for(var i=0; i<rawContents.length; i++) {
@@ -44,7 +45,7 @@ var ViewModel = function() {
 			}
 
 			that.freezers.push(new Freezer(freezer, freezerContents));
-			console.log(that.freezers()[0].name() + " " + that.freezers()[0].contents());
+			//console.log(that.freezers()[0].name() + " " + that.freezers()[0].contents());
 
 		}
 
@@ -55,6 +56,18 @@ var ViewModel = function() {
 	}, function (errorObject) {
 		console.log("The read failed: " + errorObject.code);
 	});
+
+	this.addItem = function() {
+		var currentFreezerRef = ref.child(that.chosenFreezer());
+		var currentFreezerContents = that.info[that.chosenFreezer()];
+		var newItem = document.getElementsByClassName('add-item-input')[0].value;
+
+		currentFreezerContents+= ',' + newItem;
+
+		currentFreezerRef.set(
+			currentFreezerContents
+		);
+	};
 
 	this.switchFreezer = function() {
 		var freezersRadio = document.getElementsByClassName('freezers-radio');
@@ -75,6 +88,13 @@ var ViewModel = function() {
 				return false;
 			}
 		}
+	};
+
+	this.createFreezer = function(freezerName, freezerContents) {
+		ref.set({
+			name: freezerName,
+			contents: freezerContents
+		});
 	};
 
 };
