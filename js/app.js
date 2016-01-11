@@ -30,8 +30,8 @@ var ViewModel = function() {
 
 	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/test");
 
-	ref.on("value", function(snapshot) {
-		//that.freezers.removeAll();
+	ref.on('value', function(snapshot) {
+		that.freezers.removeAll();
 
 		that.info = snapshot.val();
 
@@ -49,9 +49,12 @@ var ViewModel = function() {
 
 		}
 
-		// Automatically assign the results to show the first freezer
-		that.chosenFreezer(that.freezers()[0].name());
-		that.chosenFreezerContents(that.freezers()[0].contents());
+		// Automatically assign the results to show the first freezer if it hasn't been chosen already
+		if(!that.chosenFreezer()) {
+			that.chosenFreezer(that.freezers()[0].name());
+			that.chosenFreezerContents(that.freezers()[0].contents());
+
+		}
 
 	}, function (errorObject) {
 		console.log("The read failed: " + errorObject.code);
@@ -59,14 +62,59 @@ var ViewModel = function() {
 
 	this.addItem = function() {
 		var currentFreezerRef = ref.child(that.chosenFreezer());
-		var currentFreezerContents = that.info[that.chosenFreezer()];
-		var newItem = document.getElementsByClassName('add-item-input')[0].value;
+		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
+		var newItem = document.getElementsByClassName('add-item-input')[0];
 
-		currentFreezerContents+= ',' + newItem;
-
+		// Add the new item to the list of raw data
+		currentFreezerContentsRaw+= ',' + newItem.value;
+		// Push the new list to the database
 		currentFreezerRef.set(
-			currentFreezerContents
+			currentFreezerContentsRaw
 		);
+
+		// Update the chosen freezer's contents
+		for(var i=0; i<that.freezers().length; i++) {
+			if(that.chosenFreezer() === that.freezers()[i].name()) {
+				that.chosenFreezerContents(that.freezers()[i].contents());
+			}
+		}
+
+		// Clear the input box
+		newItem.value = '';
+	};
+
+	this.removeItem = function(item) {
+		var currentFreezerRef = ref.child(that.chosenFreezer());
+		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
+		var formattedItem = item.item + ',';
+
+		for(var i=0; i<that.freezers().length; i++) {
+			if(that.chosenFreezer() === that.freezers()[i].name()) {
+
+				// Remove the item from the raw information, and any unnecessary commas
+				currentFreezerContentsRaw = currentFreezerContentsRaw.replace(item.item,'');
+				currentFreezerContentsRaw = currentFreezerContentsRaw.replace(',,', ',');
+
+				if(currentFreezerContentsRaw[currentFreezerContentsRaw.length-1] === ',') {
+					currentFreezerContentsRaw = currentFreezerContentsRaw.slice(0, currentFreezerContentsRaw.length-1);
+				}
+
+				// Push the new list to the database
+				currentFreezerRef.set(
+					currentFreezerContentsRaw,
+					function(error) {
+						if(error) {
+							console.log(error);
+						} else {
+							console.log("success");
+						}
+					}
+				);
+
+				// Update the chosen freezer's contents
+				that.chosenFreezerContents(that.freezers()[i].contents());
+			}
+		}
 	};
 
 	this.switchFreezer = function() {

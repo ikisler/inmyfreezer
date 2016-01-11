@@ -21,7 +21,7 @@
 		<table>
 			<tbody data-bind="foreach: chosenFreezerContents">
 				<tr>
-					<td data-bind="text: item"></td>
+					<td data-bind="text: item"></td><td data-bind="click:$parent.removeItem">X</td>
 				</tr>
 			</tbody>
 			<tfoot>
