@@ -31,21 +31,36 @@ var ViewModel = function() {
 	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/test");
 
 	ref.on('value', function(snapshot) {
+		// Empty the freezers array
 		that.freezers.removeAll();
 
 		that.info = snapshot.val();
 
-
+		// Put the freezer info into the freezer array
 		for(freezer in that.info) {
-			var rawContents = that.info[freezer].split(',');
-			var freezerContents = [];
+			var rawContents = that.info[freezer].trim();
 
-			for(var i=0; i<rawContents.length; i++) {
-				freezerContents.push({item: rawContents[i]});
+			// If it starts with a comma, remove the comma
+			if(rawContents[0] === ',') {
+				rawContents = rawContents.slice(1, rawContents.length);
 			}
+			
+			// If there are no items, create a freezer with no items
+			if(!rawContents) {
+				console.log(rawContents);
+				console.log(freezer + ' no items');
+				that.freezers.push(new Freezer(freezer));
+			} else {
+				// Otherwise, create a freezer with items
+				rawContents = rawContents.split(',');
+				var freezerContents = [];
 
-			that.freezers.push(new Freezer(freezer, freezerContents));
-			//console.log(that.freezers()[0].name() + " " + that.freezers()[0].contents());
+				for(var i=0; i<rawContents.length; i++) {
+					freezerContents.push({item: rawContents[i]});
+				}
+
+				that.freezers.push(new Freezer(freezer, freezerContents));
+			}
 
 		}
 
@@ -138,11 +153,25 @@ var ViewModel = function() {
 		}
 	};
 
-	this.createFreezer = function(freezerName, freezerContents) {
-		ref.set({
-			name: freezerName,
-			contents: freezerContents
+	this.addFreezer = function() {
+		var newFreezerNameInput = document.getElementsByClassName('add-freezer-input')[0];
+		var newFreezerName = newFreezerNameInput.value;
+		var newFreezer = {newFreezerName : ' '};
+
+		console.log(newFreezer);
+
+		// test[newFreezerName] = ' ';
+
+		
+/*
+		ref.update({
+			'third':'pickles'
 		});
+*/
+		ref.child(newFreezerName).set(
+			' '
+		);
+		newFreezerName.value = '';
 	};
 
 };

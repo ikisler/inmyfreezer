@@ -13,6 +13,8 @@
 		<div data-bind="foreach: freezers">
 			<input class="freezers-radio" type="radio" name="freezers" data-bind="value: name, click: $parent.switchFreezer()"><span data-bind="text:name"></span>
 		</div>
+		<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
+		<button id="delete-freezer-button">Delete Selected Freezer</button>
 
 	</header>
 
