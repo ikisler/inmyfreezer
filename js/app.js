@@ -28,6 +28,8 @@ var ViewModel = function() {
 	this.chosenFreezerContents = ko.observableArray();
 	this.info;
 
+	this.deleteFreezerConfirm = ko.observable();
+
 	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/test");
 
 	ref.on('value', function(snapshot) {
@@ -156,22 +158,40 @@ var ViewModel = function() {
 	this.addFreezer = function() {
 		var newFreezerNameInput = document.getElementsByClassName('add-freezer-input')[0];
 		var newFreezerName = newFreezerNameInput.value;
-		var newFreezer = {newFreezerName : ' '};
 
-		console.log(newFreezer);
-
-		// test[newFreezerName] = ' ';
-
-		
-/*
-		ref.update({
-			'third':'pickles'
-		});
-*/
 		ref.child(newFreezerName).set(
 			' '
 		);
-		newFreezerName.value = '';
+
+		newFreezerNameInput.value = '';
+	};
+
+	this.removeFreezer = function() {
+
+	};
+
+	this.confirmRemoveFreezer = function() {
+		if(that.deleteFreezerConfirm() === 'yes') {
+			var currentFreezerRef = ref.child(that.chosenFreezer());
+
+			currentFreezerRef.remove(function(error) {
+				if(error) {
+					console.log(error);
+				} else {
+					console.log('success');
+				}
+			});
+
+			var freezersRadio = document.getElementsByClassName('freezers-radio');
+			freezersRadio[0].checked = true;
+			that.switchFreezer();
+
+
+		} else {
+			confrimDiv = document.getElementsByClassName('delete-freezer-message')[0].className += ' hidden';
+		}
+
+		return true;
 	};
 
 };

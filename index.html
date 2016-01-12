@@ -16,6 +16,12 @@
 		<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
 		<button id="delete-freezer-button">Delete Selected Freezer</button>
 
+		<div class="delete-freezer-message">
+			<p>Are you sure you want to delete <span data-bind="text: chosenFreezer"></span>?</p>
+			<div><input type="radio" name="delete-freezer-confirm" value="yes" data-bind="checked: deleteFreezerConfirm, click: confirmRemoveFreezer">Yes</div>
+			<div><input type="radio" name="delete-freezer-confirm" value="no" data-bind="checked: deleteFreezerConfirm, click: confirmRemoveFreezer">No</div>
+		</div>
+
 	</header>
 
 	<main>
