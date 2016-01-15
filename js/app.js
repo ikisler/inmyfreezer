@@ -31,21 +31,22 @@ var ViewModel = function() {
 	this.deleteFreezerConfirm = ko.observable();
 	this.userRef;
 
-	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
+	this.ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
 
 this.login = function() {
-	ref.authWithOAuthRedirect("google", function(error, authData) {
+	that.ref.authWithOAuthPopup("google", function(error, authData) {
 		if (error) {
 			console.log("Login Failed!", error);
 		} else {
 			console.log("Authenticated successfully with payload:", authData);
 			that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
+			that.test();
 		}
 	});
 };
 
 this.test = function() {
-	userRef.on('value', function(snapshot) {
+	that.userRef.on('value', function(snapshot) {
 		// Empty the freezers array
 		that.freezers.removeAll();
 
@@ -92,7 +93,7 @@ this.test = function() {
 };
 
 	this.addItem = function() {
-		var currentFreezerRef = ref.child(that.chosenFreezer());
+		var currentFreezerRef = that.userRef.child(that.chosenFreezer());
 		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
 		var newItem = document.getElementsByClassName('add-item-input')[0];
 
@@ -115,7 +116,7 @@ this.test = function() {
 	};
 
 	this.removeItem = function(item) {
-		var currentFreezerRef = ref.child(that.chosenFreezer());
+		var currentFreezerRef = that.userRef.child(that.chosenFreezer());
 		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
 		var formattedItem = item.item + ',';
 
@@ -173,7 +174,7 @@ this.test = function() {
 		var newFreezerNameInput = document.getElementsByClassName('add-freezer-input')[0];
 		var newFreezerName = newFreezerNameInput.value;
 
-		ref.child(newFreezerName).set(
+		that.userRef.child(newFreezerName).set(
 			' '
 		);
 
@@ -186,7 +187,7 @@ this.test = function() {
 
 	this.confirmRemoveFreezer = function() {
 		if(that.deleteFreezerConfirm() === 'yes') {
-			var currentFreezerRef = ref.child(that.chosenFreezer());
+			var currentFreezerRef = that.userRef.child(that.chosenFreezer());
 
 			currentFreezerRef.remove(function(error) {
 				if(error) {
