@@ -203,20 +203,11 @@ var ViewModel = function() {
 				}
 			});
 
-				// Update the chosen freezer's contents
-				that.chosenFreezerContents(that.freezers()[i].contents());
-			}
-		}
-				}
-			});
-
 			var freezersRadio = document.getElementsByClassName('freezers-radio');
 			if(freezersRadio[0]) {
 				freezersRadio[0].checked = true;
 				that.switchFreezer();
 			}
-
-
 		} else {
 			confirmDiv = document.getElementsByClassName('delete-freezer-message')[0].className += ' hidden';
 		}
