@@ -201,7 +201,7 @@ var ViewModel = function() {
 						}
 					}
 				}
-			);
+			});
 
 				// Update the chosen freezer's contents
 				that.chosenFreezerContents(that.freezers()[i].contents());
