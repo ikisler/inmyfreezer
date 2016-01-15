@@ -197,8 +197,8 @@ var ViewModel = function() {
 					console.log('success');
 					if(that.freezers().length === 0) {
 						that.freezers.removeAll();
-						console.log(that.freezers());
 						that.chosenFreezer('');
+						that.chosenFreezerContents.removeAll();
 					}
 				}
 			});
