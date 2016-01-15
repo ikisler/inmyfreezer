@@ -29,10 +29,23 @@ var ViewModel = function() {
 	this.info;
 
 	this.deleteFreezerConfirm = ko.observable();
+	this.userRef;
 
-	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/test");
+	var ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
 
-	ref.on('value', function(snapshot) {
+this.login = function() {
+	ref.authWithOAuthRedirect("google", function(error, authData) {
+		if (error) {
+			console.log("Login Failed!", error);
+		} else {
+			console.log("Authenticated successfully with payload:", authData);
+			that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
+		}
+	});
+};
+
+this.test = function() {
+	userRef.on('value', function(snapshot) {
 		// Empty the freezers array
 		that.freezers.removeAll();
 
@@ -76,6 +89,7 @@ var ViewModel = function() {
 	}, function (errorObject) {
 		console.log("The read failed: " + errorObject.code);
 	});
+};
 
 	this.addItem = function() {
 		var currentFreezerRef = ref.child(that.chosenFreezer());

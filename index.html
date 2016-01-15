@@ -8,7 +8,14 @@
 
 <body>
 	<header>
-		<a href="#">Logout</a>
+		<div class="login-logout-container">
+			<button data-bind="click: login">Login</button>
+
+			<div class="logged-in">
+				<span>Welcome, <span data-bind=""></span>!</span>
+				<a href="#">Logout</a>
+			</div>
+		</div>
 
 		<div data-bind="foreach: freezers">
 			<input class="freezers-radio" type="radio" name="freezers" data-bind="value: name, click: $parent.switchFreezer()"><span data-bind="text:name"></span>
