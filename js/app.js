@@ -40,12 +40,15 @@ this.login = function() {
 		} else {
 			console.log("Authenticated successfully with payload:", authData);
 			that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
-			that.test();
 		}
 	});
 };
 
-this.test = function() {
+that.ref.onAuth(function(){
+	that.test();
+});
+
+this.test= function() {
 	that.userRef.on('value', function(snapshot) {
 		// Empty the freezers array
 		that.freezers.removeAll();
