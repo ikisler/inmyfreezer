@@ -51,6 +51,7 @@ var ViewModel = function() {
 			that.freezers.removeAll();
 
 			that.info = snapshot.val();
+			console.log(that.info);
 
 			// Put the freezer info into the freezer array
 			for(freezer in that.info) {
@@ -194,16 +195,20 @@ var ViewModel = function() {
 					console.log(error);
 				} else {
 					console.log('success');
+					if(that.freezers().length === 0) {
+						that.freezers.removeAll();
+						that.chosenFreezer('');
+						that.chosenFreezerContents.removeAll();
+					}
 				}
 			});
 
 			var freezersRadio = document.getElementsByClassName('freezers-radio');
 			if(freezersRadio[0]) {
+				console.log(freezersRadio[0]);
 				freezersRadio[0].checked = true;
 				that.switchFreezer();
 			}
-
-
 		} else {
 			confirmDiv = document.getElementsByClassName('delete-freezer-message')[0].className += ' hidden';
 		}
