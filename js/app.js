@@ -197,12 +197,14 @@ var ViewModel = function() {
 					console.log('success');
 					if(that.freezers().length === 1) {
 						that.freezers.removeAll();
+						console.log(that.freezers());
 					}
 				}
 			});
 
 			var freezersRadio = document.getElementsByClassName('freezers-radio');
 			if(freezersRadio[0]) {
+				console.log(freezersRadio[0]);
 				freezersRadio[0].checked = true;
 				that.switchFreezer();
 			}
