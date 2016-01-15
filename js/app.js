@@ -198,6 +198,7 @@ var ViewModel = function() {
 					if(that.freezers().length === 1) {
 						that.freezers.removeAll();
 						console.log(that.freezers());
+						that.chosenFreezer('');
 					}
 				}
 			});
