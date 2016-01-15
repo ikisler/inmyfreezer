@@ -195,10 +195,8 @@ var ViewModel = function() {
 					console.log(error);
 				} else {
 					console.log('success');
-					for(var i=0; i<that.freezers().length; i++) {
-						if(that.chosenFreezer() === that.freezers()[i].name()) {
-							that.freezers().splice(i,1);
-						}
+					if(that.freezers().length === 1) {
+						that.freezers.removeAll();
 					}
 				}
 			});
