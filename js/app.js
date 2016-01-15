@@ -51,6 +51,7 @@ var ViewModel = function() {
 			that.freezers.removeAll();
 
 			that.info = snapshot.val();
+			console.log(that.info);
 
 			// Put the freezer info into the freezer array
 			for(freezer in that.info) {
