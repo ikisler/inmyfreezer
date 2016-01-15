@@ -195,7 +195,7 @@ var ViewModel = function() {
 					console.log(error);
 				} else {
 					console.log('success');
-					if(that.freezers().length === 1) {
+					if(that.freezers().length === 0) {
 						that.freezers.removeAll();
 						console.log(that.freezers());
 						that.chosenFreezer('');
