@@ -15,9 +15,9 @@
 			<img class="logo-img" src="img/icon-test-02.png" alt="In My Freezer Logo">
 		</div>
 		<div class="login-logout-container">
-			<button data-bind="click: login">Login</button>
+			<button class="login-button" data-bind="click: login">Login</button>
 
-			<div class="logged-in">
+			<div class="logged-in hidden">
 				<span>Welcome<span data-bind="text: userName"></span>!</span>
 				<button data-bind="click: logout">Logout</button>
 			</div>
@@ -31,7 +31,7 @@
 		<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
 		<button id="delete-freezer-button">Delete Selected Freezer</button>
 
-		<div class="delete-freezer-message">
+		<div class="delete-freezer-message hidden">
 			<p>Are you sure you want to delete <span data-bind="text: chosenFreezer"></span>?</p>
 			<div><input type="radio" name="delete-freezer-confirm" value="yes" data-bind="checked: deleteFreezerConfirm, click: confirmRemoveFreezer">Yes</div>
 			<div><input type="radio" name="delete-freezer-confirm" value="no" data-bind="checked: deleteFreezerConfirm, click: confirmRemoveFreezer">No</div>

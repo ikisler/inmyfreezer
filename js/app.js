@@ -34,6 +34,10 @@ var ViewModel = function() {
 	this.userRef;
 	this.authData = this.ref.getAuth();
 
+	this.loginButton = document.getElementsByClassName('login-button')[0];
+	this.logoutMessage = document.getElementsByClassName('logged-in')[0];
+	this.deleteFreezerMessage = document.getElementsByClassName('delete-freezer-message')[0];
+
 
 	this.login = function() {
 		that.ref.authWithOAuthPopup("google", function(error, authData) {
@@ -51,12 +55,16 @@ var ViewModel = function() {
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
 				that.userName(' ' + authData.google.displayName);
 				that.displayInfo();
+				that.loginButton.className += ' hidden';
+				that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 			}
 		});
 	};
 
 	this.logout = function() {
 		that.ref.unauth();
+		that.loginButton.className = that.loginButton.className.replace(' hidden', '');
+		that.logoutMessage.className += ' hidden';
 	};
 
 	this.displayInfo = function() {
@@ -210,6 +218,7 @@ var ViewModel = function() {
 
 	this.removeFreezer = function() {
 		// Display confirm message
+		that.deleteFreezerMessage.className = that.deleteFreezerMessage.className.replace(' hidden', '');
 	};
 
 	this.confirmRemoveFreezer = function() {
@@ -234,9 +243,9 @@ var ViewModel = function() {
 				freezersRadio[0].checked = true;
 				that.switchFreezer();
 			}
-		} else {
-			confirmDiv = document.getElementsByClassName('delete-freezer-message')[0].className += ' hidden';
 		}
+
+		document.getElementsByClassName('delete-freezer-message')[0].className += ' hidden';
 
 		return true;
 	};
