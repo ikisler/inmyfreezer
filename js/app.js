@@ -64,7 +64,7 @@ var ViewModel = function() {
 
 			// If there isn't any information, show a message.
 			// Otherwise, show info from the database.
-			if(that.info) {
+			if(!that.info) {
 				console.log('No information');
 			} else {
 				// Put the freezer info into the freezer array
