@@ -29,9 +29,7 @@ var ViewModel = function() {
 	this.info;
 	this.deleteFreezerConfirm = ko.observable();
 
-	this.userName = ko.computed(function(){
-		return ', ' + that.authData.uid.google.displayName | '';
-	});
+	this.userName = ko.observable();
 	this.ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
 	this.userRef;
 	this.authData = this.ref.getAuth();
@@ -51,6 +49,7 @@ var ViewModel = function() {
 			} else {
 				console.log("Authenticated successfully with payload:", authData);
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
+				that.userName(authData.google.displayName);
 				that.displayInfo();
 			}
 		});
@@ -116,6 +115,7 @@ var ViewModel = function() {
 
 	if(this.authData) {
 		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
+		that.userName(that.authData.google.displayName);
 		that.displayInfo();
 	}
 
