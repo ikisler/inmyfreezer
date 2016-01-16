@@ -49,7 +49,7 @@ var ViewModel = function() {
 			} else {
 				console.log("Authenticated successfully with payload:", authData);
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
-				that.userName(authData.google.displayName);
+				that.userName(' ' + authData.google.displayName);
 				that.displayInfo();
 			}
 		});
@@ -115,7 +115,7 @@ var ViewModel = function() {
 
 	if(this.authData) {
 		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
-		that.userName(that.authData.google.displayName);
+		that.userName(' ' + that.authData.google.displayName);
 		that.displayInfo();
 	}
 

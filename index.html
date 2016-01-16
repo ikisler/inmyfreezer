@@ -4,10 +4,16 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>In My Freezer</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 	<header>
+		<div class="logo-container">
+			<h1 class="logo-text">In My Freezer</h1>
+			<img class="logo-img" src="img/icon-test-02.png" alt="In My Freezer Logo">
+		</div>
 		<div class="login-logout-container">
 			<button data-bind="click: login">Login</button>
 
@@ -16,7 +22,9 @@
 				<button data-bind="click: logout">Logout</button>
 			</div>
 		</div>
+	</header>
 
+	<main>
 		<div data-bind="foreach: freezers">
 			<input class="freezers-radio" type="radio" name="freezers" data-bind="value: name, click: $parent.switchFreezer()"><span data-bind="text:name"></span>
 		</div>
@@ -29,11 +37,8 @@
 			<div><input type="radio" name="delete-freezer-confirm" value="no" data-bind="checked: deleteFreezerConfirm, click: confirmRemoveFreezer">No</div>
 		</div>
 
-	</header>
-
-	<main>
 		<h1 data-bind="text: chosenFreezer"></h1>
-		<table>
+		<table class="freezer-contents">
 			<tbody data-bind="foreach: chosenFreezerContents">
 				<tr>
 					<td data-bind="text: item"></td><td data-bind="click:$parent.removeItem">X</td>
@@ -42,9 +47,7 @@
 			<tfoot>
 				<tr>
 					<td>
-					<input class="add-item-input" placeholder="food description">
-					</td>
-					<td>
+						<input class="add-item-input" placeholder="food description">
 						<button id="add-item-button" data-bind="click: addItem">Add</button>
 					</td>
 				</tr>

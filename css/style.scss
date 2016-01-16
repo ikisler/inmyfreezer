@@ -1,0 +1,97 @@
+$logoTextColor: #0c36a9;
+$textColor: #000;
+$accentColor: #6083e5;
+
+$fontFamily: 'Roboto', sans-serif;
+
+$headerWidth: 80%;
+$headerMargin: 0 auto;
+
+$buttonMinWidth: 60px;
+$buttonBG: #ffd901;
+$buttonPadding: 6px;
+$buttonBorder: none;
+$buttonShadow: solid 2px rgba(0, 0, 0, 0.3);
+$buttonHighlight: solid 2px rgba(255, 255, 255, 0.3);
+$buttonFocusText: #fff;
+
+$inputPadding: 6px;
+
+$logoContWidth: 50%;
+$logoTextSize: 3em;
+$logoTextMargin: 0 50px 0 0;
+$logoImgSize: 60px;
+
+$loginLogoutContMargin: 0 50px;
+
+body {
+	font-family: $fontFamily;
+}
+
+header {
+	width: $headerWidth;
+	margin: $headerMargin;
+}
+
+button {
+	min-width: $buttonMinWidth;
+	color: $textColor;
+	background: $buttonBG;
+	padding: $buttonPadding;
+	border-right: $buttonShadow;
+	border-bottom: $buttonShadow;
+	border-top: $buttonHighlight;
+	border-left: $buttonHighlight;
+	box-shadow: none;
+}
+
+button:active {
+	box-shadow: none;
+	border-right: $buttonHighlight;
+	border-bottom: $buttonHighlight;
+	border-top: $buttonShadow;
+	border-left: $buttonShadow;
+}
+
+button:focus {
+	color: $buttonFocusText;
+	background: $accentColor;
+}
+
+button:focus, input:focus {
+	outline: none;
+}
+
+input {
+	padding: $inputPadding;
+}
+
+input:focus {
+	border: solid 2px $accentColor;
+}
+
+.logo-container {
+	display: inline-block;
+	width: $logoContWidth;
+}
+
+.logo-text {
+	display: inline-block;
+	color: $logoTextColor;
+	font-size: $logoTextSize;
+	margin: $logoTextMargin;
+}
+
+.logo-img {
+	width: $logoImgSize;
+	vertical-align: middle;
+}
+
+.login-logout-container {
+	display: inline-block;
+	margin: $loginLogoutContMargin;
+}
+
+.freezer-contents {
+	width: 50%;
+}
