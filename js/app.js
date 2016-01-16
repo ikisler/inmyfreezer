@@ -125,6 +125,8 @@ var ViewModel = function() {
 		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
 		that.userName(' ' + that.authData.google.displayName);
 		that.displayInfo();
+		that.loginButton.className += ' hidden';
+		that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 	}
 
 	this.addItem = function() {
