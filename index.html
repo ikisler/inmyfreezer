@@ -29,7 +29,7 @@
 			<input class="freezers-radio" type="radio" name="freezers" data-bind="value: name, click: $parent.switchFreezer()"><span data-bind="text:name"></span>
 		</div>
 		<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
-		<button id="delete-freezer-button">Delete Selected Freezer</button>
+		<button id="delete-freezer-button" data-bind="click: removeFreezer">Delete Selected Freezer</button>
 
 		<div class="delete-freezer-message hidden">
 			<p>Are you sure you want to delete <span data-bind="text: chosenFreezer"></span>?</p>
