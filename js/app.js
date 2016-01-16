@@ -32,11 +32,20 @@ var ViewModel = function() {
 	this.userRef;
 
 	this.ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
+	this.authData = this.ref.getAuth();
+
 
 	this.login = function() {
 		that.ref.authWithOAuthPopup("google", function(error, authData) {
 			if (error) {
 				console.log("Login Failed!", error);
+				if (error.code === "TRANSPORT_UNAVAILABLE") {
+					ref.authWithOAuthRedirect("google", function(error) {
+						if(error) {
+							console.log('Login failed!', error);
+						}
+					});
+				}
 			} else {
 				console.log("Authenticated successfully with payload:", authData);
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
@@ -45,7 +54,7 @@ var ViewModel = function() {
 		});
 	};
 
-	this.displayInfo= function() {
+	this.displayInfo = function() {
 		that.userRef.on('value', function(snapshot) {
 			// Empty the freezers array
 			that.freezers.removeAll();
@@ -53,45 +62,56 @@ var ViewModel = function() {
 			that.info = snapshot.val();
 			console.log(that.info);
 
-			// Put the freezer info into the freezer array
-			for(freezer in that.info) {
-				var rawContents = that.info[freezer].trim();
+			// If there isn't any information, show a message.
+			// Otherwise, show info from the database.
+			if(that.info) {
+				console.log('No information');
+			} else {
+				// Put the freezer info into the freezer array
+				for(freezer in that.info) {
+					var rawContents = that.info[freezer].trim();
 
-				// If it starts with a comma, remove the comma
-				if(rawContents[0] === ',') {
-					rawContents = rawContents.slice(1, rawContents.length);
-				}
-				
-				// If there are no items, create a freezer with no items
-				if(!rawContents) {
-					console.log(rawContents);
-					console.log(freezer + ' no items');
-					that.freezers.push(new Freezer(freezer));
-				} else {
-					// Otherwise, create a freezer with items
-					rawContents = rawContents.split(',');
-					var freezerContents = [];
+					// If it starts with a comma, remove the comma
+					if(rawContents[0] === ',') {
+						rawContents = rawContents.slice(1, rawContents.length);
+					}
+					
+					// If there are no items, create a freezer with no items
+					if(!rawContents) {
+						console.log(rawContents);
+						console.log(freezer + ' no items');
+						that.freezers.push(new Freezer(freezer));
+					} else {
+						// Otherwise, create a freezer with items
+						rawContents = rawContents.split(',');
+						var freezerContents = [];
 
-					for(var i=0; i<rawContents.length; i++) {
-						freezerContents.push({item: rawContents[i]});
+						for(var i=0; i<rawContents.length; i++) {
+							freezerContents.push({item: rawContents[i]});
+						}
+
+						that.freezers.push(new Freezer(freezer, freezerContents));
 					}
 
-					that.freezers.push(new Freezer(freezer, freezerContents));
 				}
 
-			}
+				// Automatically assign the results to show the first freezer if it hasn't been chosen already
+				if(!that.chosenFreezer()) {
+					that.chosenFreezer(that.freezers()[0].name());
+					that.chosenFreezerContents(that.freezers()[0].contents());
 
-			// Automatically assign the results to show the first freezer if it hasn't been chosen already
-			if(!that.chosenFreezer()) {
-				that.chosenFreezer(that.freezers()[0].name());
-				that.chosenFreezerContents(that.freezers()[0].contents());
-
+				}
 			}
 
 		}, function (errorObject) {
 			console.log("The read failed: " + errorObject.code);
 		});
 	};
+
+	if(this.authData) {
+		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
+		that.displayInfo();
+	}
 
 	this.addItem = function() {
 		var currentFreezerRef = that.userRef.child(that.chosenFreezer());
@@ -205,7 +225,6 @@ var ViewModel = function() {
 
 			var freezersRadio = document.getElementsByClassName('freezers-radio');
 			if(freezersRadio[0]) {
-				console.log(freezersRadio[0]);
 				freezersRadio[0].checked = true;
 				that.switchFreezer();
 			}
