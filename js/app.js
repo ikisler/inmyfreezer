@@ -127,7 +127,7 @@ var ViewModel = function() {
 		that.displayInfo();
 		that.loginButton.className += ' hidden';
 		that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
-		location.reload();
+		document.location.reload();
 	}
 
 	this.addItem = function() {
