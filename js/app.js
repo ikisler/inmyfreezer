@@ -27,11 +27,13 @@ var ViewModel = function() {
 	this.chosenFreezer = ko.observable();
 	this.chosenFreezerContents = ko.observableArray();
 	this.info;
-
 	this.deleteFreezerConfirm = ko.observable();
-	this.userRef;
 
+	this.userName = ko.computed(function(){
+		return ', ' + that.authData.uid.google.displayName | '';
+	});
 	this.ref = new Firebase("https://inmyfreezer.firebaseio.com/user/");
+	this.userRef;
 	this.authData = this.ref.getAuth();
 
 
@@ -40,7 +42,7 @@ var ViewModel = function() {
 			if (error) {
 				console.log("Login Failed!", error);
 				if (error.code === "TRANSPORT_UNAVAILABLE") {
-					ref.authWithOAuthRedirect("google", function(error) {
+					that.ref.authWithOAuthRedirect("google", function(error) {
 						if(error) {
 							console.log('Login failed!', error);
 						}
@@ -52,6 +54,10 @@ var ViewModel = function() {
 				that.displayInfo();
 			}
 		});
+	};
+
+	this.logout = function() {
+		that.ref.unauth();
 	};
 
 	this.displayInfo = function() {
