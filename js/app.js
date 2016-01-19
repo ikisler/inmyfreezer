@@ -39,6 +39,8 @@ var ViewModel = function() {
 	this.deleteFreezerMessage = document.getElementsByClassName('delete-freezer-message')[0];
 	this.addDeleteFreezers = document.getElementsByClassName('add-delete-freezer-container')[0];
 	this.freezerContentsTable = document.getElementsByClassName('freezer-contents')[0];
+	this.introContainer = document.getElementsByClassName('intro-container')[0];
+	this.emptyFreezer = document.getElementsByClassName('empty-freezer')[0];
 
 
 	this.login = function() {
@@ -54,11 +56,11 @@ var ViewModel = function() {
 				}
 			} else {
 				// Successful login
-				console.log("Authenticated successfully with payload:", authData);
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
 				that.userName(' ' + authData.google.displayName);
 				that.displayInfo();
 				that.loginButton.className += ' hidden';
+				that.introContainer.className += ' hidden';
 				that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 				that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
 				that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
@@ -69,6 +71,7 @@ var ViewModel = function() {
 	this.logout = function() {
 		that.ref.unauth();
 		that.loginButton.className = that.loginButton.className.replace(' hidden', '');
+		that.introContainer.className = that.introContainer.className.replace(' hidden', '');
 		that.logoutMessage.className += ' hidden';
 		that.addDeleteFreezers.className += ' hidden';
 		that.freezerContentsTable.className += ' hidden';
@@ -81,7 +84,6 @@ var ViewModel = function() {
 			that.freezers.removeAll();
 
 			that.info = snapshot.val();
-			console.log(that.info);
 
 			// If there isn't any information, show a message.
 			// Otherwise, show info from the database.
@@ -99,13 +101,14 @@ var ViewModel = function() {
 					
 					// If there are no items, create a freezer with no items
 					if(!rawContents) {
-						console.log(rawContents);
-						console.log(freezer + ' no items');
+						that.emptyFreezer.className = that.emptyFreezer.className.replace(' hidden', '');
 						that.freezers.push(new Freezer(freezer));
 					} else {
 						// Otherwise, create a freezer with items
 						rawContents = rawContents.split(',');
 						var freezerContents = [];
+
+						that.emptyFreezer.className += ' hidden';
 
 						for(var i=0; i<rawContents.length; i++) {
 							freezerContents.push({item: rawContents[i]});
@@ -135,6 +138,7 @@ var ViewModel = function() {
 		that.userName(' ' + that.authData.google.displayName);
 		that.displayInfo();
 		that.loginButton.className += ' hidden';
+		that.introContainer.className += ' hidden';
 		that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 		that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
 		that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
