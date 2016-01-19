@@ -46,7 +46,23 @@ var ViewModel = function() {
 		return !that.chosenFreezerContents().length;
 	});
 
+	/*** Rotating Food Names Effect ***/
+	this.rotateFoodArray = ['package of vegetables', 'chub of beef', 'chicken stock', 'frozen pizza'];
+	this.rotateFoodCounter = 1;
+	this.rotateFoodsText = ko.observable(that.rotateFoodArray[0]); // Start with the first food
 
+	window.setInterval(function() {
+		that.rotateFoodsText(that.rotateFoodArray[that.rotateFoodCounter]);
+
+		that.rotateFoodCounter++;
+
+		if(that.rotateFoodCounter === that.rotateFoodArray.length) {
+			that.rotateFoodCounter = 0;
+		}
+	}, 2000);
+
+
+	/*** Login ***/
 	this.login = function() {
 		that.ref.authWithOAuthPopup("google", function(error, authData) {
 			if (error) {
@@ -73,6 +89,7 @@ var ViewModel = function() {
 		});
 	};
 
+	/*** Logout ***/
 	this.logout = function() {
 		that.ref.unauth();
 		that.loginButton.className = that.loginButton.className.replace(' hidden', '');
@@ -84,6 +101,7 @@ var ViewModel = function() {
 		document.location.reload();
 	};
 
+	// Display User's Information
 	this.displayInfo = function() {
 		that.userRef.on('value', function(snapshot) {
 			// Empty the freezers array
@@ -135,7 +153,7 @@ var ViewModel = function() {
 		});
 	};
 
-	// If the user is already logged in, reflect that
+	/*** If the user is already logged in, reflect that ***/
 	if(this.authData) {
 		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
 		that.userName(' ' + that.authData.google.displayName);
@@ -145,8 +163,10 @@ var ViewModel = function() {
 		that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 		that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
 		that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
+		that.emptyFreezer.className = that.emptyFreezer.className.replace(' hidden', '');
 	}
 
+	/*** Add Item to Freezer ***/
 	this.addItem = function() {
 		var currentFreezerRef = that.userRef.child(that.chosenFreezer());
 		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
@@ -170,6 +190,7 @@ var ViewModel = function() {
 		newItem.value = '';
 	};
 
+	/*** Remove Item from Freezer ***/
 	this.removeItem = function(item) {
 		var currentFreezerRef = that.userRef.child(that.chosenFreezer());
 		var currentFreezerContentsRaw = that.info[that.chosenFreezer()];
@@ -204,6 +225,7 @@ var ViewModel = function() {
 		}
 	};
 
+	/*** Switch between Freezers ***/
 	this.switchFreezer = function() {
 		var freezersRadio = document.getElementsByClassName('freezers-radio');
 
@@ -225,6 +247,7 @@ var ViewModel = function() {
 		}
 	};
 
+	/*** Add a New Freezer ***/
 	this.addFreezer = function() {
 		var newFreezerNameInput = document.getElementsByClassName('add-freezer-input')[0];
 		var newFreezerName = newFreezerNameInput.value;
@@ -236,6 +259,7 @@ var ViewModel = function() {
 		newFreezerNameInput.value = '';
 	};
 
+	/*** Remove a Freezer ***/
 	this.removeFreezer = function() {
 		// Display confirm message
 		that.deleteFreezerMessage.className = that.deleteFreezerMessage.className.replace(' hidden', '');
