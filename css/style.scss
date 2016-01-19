@@ -1,5 +1,6 @@
 $logoTextColor: #0c36a9;
 $textColor: #000;
+$textAccentColor: #fff;
 $accentColor: #6083e5;
 
 $fontFamily: 'Roboto', sans-serif;
@@ -29,12 +30,54 @@ $loginLogoutContMargin: 0 50px;
 }
 
 body {
+	margin: 0;
 	font-family: $fontFamily;
 }
 
 header {
 	width: $headerWidth;
 	margin: $headerMargin;
+}
+
+.logo-container {
+	display: inline-block;
+	width: $logoContWidth;
+}
+
+.logo-text {
+	display: inline-block;
+	color: $logoTextColor;
+	font-size: $logoTextSize;
+	margin: $logoTextMargin;
+}
+
+.logo-img {
+	width: $logoImgSize;
+	vertical-align: middle;
+}
+
+.login-logout-container {
+	display: inline-block;
+	margin: $loginLogoutContMargin;
+}
+
+nav {
+	color: $textAccentColor;
+	background: $logoTextColor;
+	min-height: 20px;
+	padding: 10px;
+}
+
+nav span {
+	padding-right: 20px;
+}
+
+main {
+	padding: 30px;
+}
+
+.freezer-contents {
+	width: 50%;
 }
 
 button {
@@ -72,30 +115,4 @@ input {
 
 input:focus {
 	border: solid 2px $accentColor;
-}
-
-.logo-container {
-	display: inline-block;
-	width: $logoContWidth;
-}
-
-.logo-text {
-	display: inline-block;
-	color: $logoTextColor;
-	font-size: $logoTextSize;
-	margin: $logoTextMargin;
-}
-
-.logo-img {
-	width: $logoImgSize;
-	vertical-align: middle;
-}
-
-.login-logout-container {
-	display: inline-block;
-	margin: $loginLogoutContMargin;
-}
-
-.freezer-contents {
-	width: 50%;
 }
