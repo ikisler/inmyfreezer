@@ -29,8 +29,10 @@
 	</nav>
 
 	<main>
-		<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
-		<button id="delete-freezer-button" data-bind="click: removeFreezer">Delete Selected Freezer</button>
+		<div class="add-delete-freezer-container hidden">
+			<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
+			<button id="delete-freezer-button" data-bind="click: removeFreezer">Delete Selected Freezer</button>
+		</div>
 
 		<div class="delete-freezer-message hidden">
 			<p>Are you sure you want to delete <span data-bind="text: chosenFreezer"></span>?</p>
@@ -39,7 +41,7 @@
 		</div>
 
 		<h1 data-bind="text: chosenFreezer"></h1>
-		<table class="freezer-contents">
+		<table class="freezer-contents hidden">
 			<tbody data-bind="foreach: chosenFreezerContents">
 				<tr>
 					<td data-bind="text: item"></td><td data-bind="click:$parent.removeItem">X</td>
@@ -54,6 +56,13 @@
 				</tr>
 			</tfoot>
 		</table>
+
+		<div class="intro-container">
+			<h1>Where's that __________?</h1>
+			<p>Package of vegetables.  Chub of beef.  Chicken stock.  Frozen pizza.</p>
+			<p>In My Freezer helps you keep track of your food, eliminated frustration and waste.</p>
+			<p>Use your Google account to login, and start tracking your food in minutes!</p>
+		</div>
 	</main>
 
 	<footer></footer>

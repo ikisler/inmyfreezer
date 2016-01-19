@@ -37,6 +37,8 @@ var ViewModel = function() {
 	this.loginButton = document.getElementsByClassName('login-button')[0];
 	this.logoutMessage = document.getElementsByClassName('logged-in')[0];
 	this.deleteFreezerMessage = document.getElementsByClassName('delete-freezer-message')[0];
+	this.addDeleteFreezers = document.getElementsByClassName('add-delete-freezer-container')[0];
+	this.freezerContentsTable = document.getElementsByClassName('freezer-contents')[0];
 
 
 	this.login = function() {
@@ -51,12 +53,15 @@ var ViewModel = function() {
 					});
 				}
 			} else {
+				// Successful login
 				console.log("Authenticated successfully with payload:", authData);
 				that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + authData.uid);
 				that.userName(' ' + authData.google.displayName);
 				that.displayInfo();
 				that.loginButton.className += ' hidden';
 				that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
+				that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
+				that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
 			}
 		});
 	};
@@ -65,6 +70,8 @@ var ViewModel = function() {
 		that.ref.unauth();
 		that.loginButton.className = that.loginButton.className.replace(' hidden', '');
 		that.logoutMessage.className += ' hidden';
+		that.addDeleteFreezers.className += ' hidden';
+		that.freezerContentsTable.className += ' hidden';
 		document.location.reload();
 	};
 
@@ -122,12 +129,15 @@ var ViewModel = function() {
 		});
 	};
 
+	// If the user is already logged in, reflect that
 	if(this.authData) {
 		that.userRef = new Firebase("https://inmyfreezer.firebaseio.com/user/" + that.authData.uid);
 		that.userName(' ' + that.authData.google.displayName);
 		that.displayInfo();
 		that.loginButton.className += ' hidden';
 		that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
+		that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
+		that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
 	}
 
 	this.addItem = function() {

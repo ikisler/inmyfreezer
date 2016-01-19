@@ -27,6 +27,9 @@ header {
   display: inline-block;
   margin: 0 50px; }
 
+.logged-in span {
+  margin: 10px; }
+
 nav {
   color: #fff;
   background: #0c36a9;
