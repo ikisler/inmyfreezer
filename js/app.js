@@ -42,6 +42,12 @@ var ViewModel = function() {
 	this.introContainer = document.getElementsByClassName('intro-container')[0];
 	this.emptyFreezer = document.getElementsByClassName('empty-freezer')[0];
 
+	this.showEmptyMessage = ko.computed(function() {
+		console.log(that.chosenFreezerContents().length);
+		console.log(that.authData);
+		return that.chosenFreezerContents().length || that.authData;
+	});
+
 
 	this.login = function() {
 		that.ref.authWithOAuthPopup("google", function(error, authData) {

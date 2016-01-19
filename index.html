@@ -41,7 +41,7 @@
 		</div>
 
 		<h1 data-bind="text: chosenFreezer"></h1>
-		<p class="empty-freezer message-box hidden">Add food to your freezer using the text box below.</p>
+		<p class="empty-freezer message-box" data-bind="visible: showEmptyMessage">Add food to your freezer using the text box below.</p>
 		<table class="freezer-contents hidden">
 			<tbody data-bind="foreach: chosenFreezerContents">
 				<tr>
