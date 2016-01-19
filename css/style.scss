@@ -61,7 +61,7 @@ header {
 	margin: $loginLogoutContMargin;
 }
 
-.logged-in span {
+.logged-in button {
 	margin: 10px;
 }
 
@@ -78,6 +78,13 @@ nav span {
 
 main {
 	padding: 30px;
+}
+
+.rotating-foods {
+	margin: 5px;
+	padding: 5px;
+	border: solid 1px;
+	min-width: 80px;
 }
 
 .freezer-contents {
