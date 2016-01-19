@@ -61,6 +61,10 @@ header {
 	margin: $loginLogoutContMargin;
 }
 
+.logged-in span {
+	margin: 10px;
+}
+
 nav {
 	color: $textAccentColor;
 	background: $logoTextColor;
