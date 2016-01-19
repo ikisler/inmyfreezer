@@ -101,7 +101,7 @@ var ViewModel = function() {
 					
 					// If there are no items, create a freezer with no items
 					if(!rawContents) {
-						that.emptyFreezer.className = that.emptyFreezer.className.replace(' hidden', '');
+						that.emptyFreezer.className = that.emptyFreezer.className.replace(/(hidden)/g, '');
 						that.freezers.push(new Freezer(freezer));
 					} else {
 						// Otherwise, create a freezer with items
