@@ -43,9 +43,7 @@ var ViewModel = function() {
 	this.emptyFreezer = document.getElementsByClassName('empty-freezer')[0];
 
 	this.showEmptyMessage = ko.computed(function() {
-		console.log(that.chosenFreezerContents().length);
-		console.log(that.authData);
-		return that.chosenFreezerContents().length || that.authData;
+		return !that.chosenFreezerContents().length;
 	});
 
 
@@ -70,6 +68,7 @@ var ViewModel = function() {
 				that.logoutMessage.className = that.logoutMessage.className.replace(' hidden', '');
 				that.addDeleteFreezers.className = that.addDeleteFreezers.className.replace(' hidden', '');
 				that.freezerContentsTable.className = that.freezerContentsTable.className.replace(' hidden', '');
+				that.emptyFreezer.className = that.emptyFreezer.className.replace(' hidden', '');
 			}
 		});
 	};
@@ -81,6 +80,7 @@ var ViewModel = function() {
 		that.logoutMessage.className += ' hidden';
 		that.addDeleteFreezers.className += ' hidden';
 		that.freezerContentsTable.className += ' hidden';
+		that.emptyFreezer.className += ' hidden';
 		document.location.reload();
 	};
 
@@ -107,14 +107,11 @@ var ViewModel = function() {
 					
 					// If there are no items, create a freezer with no items
 					if(!rawContents) {
-						that.emptyFreezer.className = that.emptyFreezer.className.replace(/(hidden)/g, '');
 						that.freezers.push(new Freezer(freezer));
 					} else {
 						// Otherwise, create a freezer with items
 						rawContents = rawContents.split(',');
 						var freezerContents = [];
-
-						that.emptyFreezer.className += ' hidden';
 
 						for(var i=0; i<rawContents.length; i++) {
 							freezerContents.push({item: rawContents[i]});
