@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .hidden {
   display: none; }
 
@@ -42,6 +43,12 @@ nav span {
 main {
   padding: 30px; }
 
+.message-box {
+  color: #3d68de;
+  padding: 10px;
+  border: solid 1px;
+  width: 360px; }
+
 .rotating-foods {
   margin: 5px;
   padding: 5px;
@@ -50,6 +57,9 @@ main {
 
 .freezer-contents {
   width: 50%; }
+
+.delete-item {
+  cursor: pointer; }
 
 button {
   min-width: 60px;
@@ -60,7 +70,13 @@ button {
   border-bottom: solid 2px rgba(0, 0, 0, 0.3);
   border-top: solid 2px rgba(255, 255, 255, 0.3);
   border-left: solid 2px rgba(255, 255, 255, 0.3);
-  box-shadow: none; }
+  box-shadow: none;
+  /*
+  	-webkit-transition: background 2s;
+  ┬á┬á┬á transition: background 2s;
+  */
+  transition-property: background-color;
+  transition-duration: 0.3s; }
 
 button:active {
   box-shadow: none;
@@ -71,7 +87,9 @@ button:active {
 
 button:focus {
   color: #fff;
-  background: #6083e5; }
+  background: #6083e5;
+  transition-property: background-color;
+  transition-duration: 0.3s; }
 
 button:focus, input:focus {
   outline: none; }
