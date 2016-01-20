@@ -2,6 +2,7 @@ $logoTextColor: #0c36a9;
 $textColor: #000;
 $textAccentColor: #fff;
 $accentColor: #6083e5;
+$accentColor2: #3d68de;
 
 $fontFamily: 'Roboto', sans-serif;
 
@@ -24,6 +25,11 @@ $logoTextMargin: 0 50px 0 0;
 $logoImgSize: 60px;
 
 $loginLogoutContMargin: 0 50px;
+
+$messageBoxPadding: 10px;
+$messageBoxBorder: solid 1px;
+$messageBoxWidth: 360px;
+
 
 .hidden {
 	display: none;
@@ -80,6 +86,13 @@ main {
 	padding: 30px;
 }
 
+.message-box {
+	color: $accentColor2;
+	padding: $messageBoxPadding;
+	border: $messageBoxBorder;
+	width: $messageBoxWidth;
+}
+
 .rotating-foods {
 	margin: 5px;
 	padding: 5px;
@@ -89,6 +102,10 @@ main {
 
 .freezer-contents {
 	width: 50%;
+}
+
+.delete-item {
+	cursor: pointer;
 }
 
 button {
@@ -101,6 +118,14 @@ button {
 	border-top: $buttonHighlight;
 	border-left: $buttonHighlight;
 	box-shadow: none;
+
+/*
+	-webkit-transition: background 2s;
+    transition: background 2s;
+*/
+
+	transition-property: background-color;
+	transition-duration: 0.3s;
 }
 
 button:active {
@@ -114,6 +139,9 @@ button:active {
 button:focus {
 	color: $buttonFocusText;
 	background: $accentColor;
+
+	transition-property: background-color;
+	transition-duration: 0.3s;
 }
 
 button:focus, input:focus {
