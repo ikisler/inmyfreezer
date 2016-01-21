@@ -29,6 +29,7 @@
 	</nav>
 
 	<main>
+		<div class="message-box" data-bind="visible: error, text: error"></div>
 		<div class="add-delete-freezer-container hidden">
 			<input class="add-freezer-input" placeholder="freezer name"><button id="add-freezer-button" data-bind="click: addFreezer">Add Freezer</button>
 			<button id="delete-freezer-button" data-bind="click: removeFreezer">Delete Selected Freezer</button>
