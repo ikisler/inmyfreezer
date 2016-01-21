@@ -199,13 +199,24 @@ var ViewModel = function() {
 		for(var i=0; i<that.freezers().length; i++) {
 			if(that.chosenFreezer() === that.freezers()[i].name()) {
 
-				// Remove the item from the raw information, and any unnecessary commas
-				currentFreezerContentsRaw = currentFreezerContentsRaw.replace(item.item,'');
+				// Remove any unnecessary commas
 				currentFreezerContentsRaw = currentFreezerContentsRaw.replace(',,', ',');
 
 				if(currentFreezerContentsRaw[currentFreezerContentsRaw.length-1] === ',') {
 					currentFreezerContentsRaw = currentFreezerContentsRaw.slice(0, currentFreezerContentsRaw.length-1);
 				}
+
+				// Remoce the item
+				var items = currentFreezerContentsRaw.split(',');
+
+				for(var j=0; j<items.length; j++) {
+					if(items[j] === item.item) {
+						items.splice(j, 1);
+						break;
+					}
+				}
+
+				currentFreezerContentsRaw = items.join();
 
 				// Push the new list to the database
 				currentFreezerRef.set(
