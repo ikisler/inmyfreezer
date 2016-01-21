@@ -46,6 +46,8 @@ var ViewModel = function() {
 		return !that.chosenFreezerContents().length;
 	});
 
+	this.error = ko.observable();
+
 	/*** Rotating Food Names Effect ***/
 	this.rotateFoodArray = ['package of vegetables', 'chub of beef', 'chicken stock', 'frozen pizza'];
 	this.rotateFoodCounter = 1;
@@ -61,18 +63,30 @@ var ViewModel = function() {
 		}
 	}, 2000);
 
+	/*** Error Message Display ***/
+	this.showError = function(error) {
+		that.error('ERROR: ' + error);
+		that.removeError();
+	};
+
+	this.removeError = function() {
+		setTimeout(function(){
+			that.error('');
+		}, 3000);
+	};
 
 	/*** Login ***/
 	this.login = function() {
 		that.ref.authWithOAuthPopup("google", function(error, authData) {
 			if (error) {
-				console.log("Login Failed!", error);
 				if (error.code === "TRANSPORT_UNAVAILABLE") {
 					that.ref.authWithOAuthRedirect("google", function(error) {
 						if(error) {
-							console.log('Login failed!', error);
+							that.showError('Login failed! ', error);
 						}
 					});
+				} else {
+					that.showError('Login failed! ', error);
 				}
 			} else {
 				// Successful login
@@ -112,7 +126,7 @@ var ViewModel = function() {
 			// If there isn't any information, show a message.
 			// Otherwise, show info from the database.
 			if(!that.info) {
-				console.log('No information');
+				that.showError('Add a freezer using the input box below.');
 			} else {
 				// Put the freezer info into the freezer array
 				for(freezer in that.info) {
@@ -149,7 +163,7 @@ var ViewModel = function() {
 			}
 
 		}, function (errorObject) {
-			console.log("The read failed: " + errorObject.code);
+			that.showError('Could not retrieve information: ' + errorObject.code);
 		});
 	};
 
@@ -176,7 +190,12 @@ var ViewModel = function() {
 		currentFreezerContentsRaw+= ',' + newItem.value;
 		// Push the new list to the database
 		currentFreezerRef.set(
-			currentFreezerContentsRaw
+			currentFreezerContentsRaw,
+			function(error) {
+				if(error) {
+					that.showError('Failed to add item! ', error);
+				}
+			}
 		);
 
 		// Update the chosen freezer's contents
@@ -223,9 +242,7 @@ var ViewModel = function() {
 					currentFreezerContentsRaw,
 					function(error) {
 						if(error) {
-							console.log(error);
-						} else {
-							console.log("success");
+							that.showError('Failed to remove item! ', error);
 						}
 					}
 				);
@@ -282,9 +299,8 @@ var ViewModel = function() {
 
 			currentFreezerRef.remove(function(error) {
 				if(error) {
-					console.log(error);
+					that.showError('Failed to remove freezer! ', error);
 				} else {
-					console.log('success');
 					if(that.freezers().length === 0) {
 						that.freezers.removeAll();
 						that.chosenFreezer('');
@@ -304,7 +320,6 @@ var ViewModel = function() {
 
 		return true;
 	};
-
 };
 
 ko.applyBindings(new ViewModel());
