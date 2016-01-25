@@ -71,7 +71,7 @@ header {
 	margin: 10px;
 }
 
-nav {
+nav, footer {
 	color: $textAccentColor;
 	background: $logoTextColor;
 	min-height: 20px;
@@ -108,6 +108,15 @@ main {
 	cursor: pointer;
 }
 
+footer {
+	text-align: right;
+}
+
+footer a {
+	color: $textAccentColor;
+}
+
+/*** Form Elements ***/
 button {
 	min-width: $buttonMinWidth;
 	color: $textColor;
@@ -118,11 +127,6 @@ button {
 	border-top: $buttonHighlight;
 	border-left: $buttonHighlight;
 	box-shadow: none;
-
-/*
-	-webkit-transition: background 2s;
-    transition: background 2s;
-*/
 
 	transition-property: background-color;
 	transition-duration: 0.3s;
