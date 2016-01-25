@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .hidden {
   display: none; }
 
@@ -31,7 +30,7 @@ header {
 .logged-in button {
   margin: 10px; }
 
-nav {
+nav, footer {
   color: #fff;
   background: #0c36a9;
   min-height: 20px;
@@ -61,6 +60,13 @@ main {
 .delete-item {
   cursor: pointer; }
 
+footer {
+  text-align: right; }
+
+footer a {
+  color: #fff; }
+
+/*** Form Elements ***/
 button {
   min-width: 60px;
   color: #000;
@@ -71,10 +77,6 @@ button {
   border-top: solid 2px rgba(255, 255, 255, 0.3);
   border-left: solid 2px rgba(255, 255, 255, 0.3);
   box-shadow: none;
-  /*
-  	-webkit-transition: background 2s;
-  ┬á┬á┬á transition: background 2s;
-  */
   transition-property: background-color;
   transition-duration: 0.3s; }
 
