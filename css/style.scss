@@ -12,6 +12,7 @@ $headerMargin: 0 auto;
 $buttonMinWidth: 60px;
 $buttonBG: #ffd901;
 $buttonPadding: 6px;
+$buttonMargin: 5px 0;
 $buttonBorder: none;
 $buttonShadow: solid 2px rgba(0, 0, 0, 0.3);
 $buttonHighlight: solid 2px rgba(255, 255, 255, 0.3);
@@ -40,6 +41,7 @@ body {
 	font-family: $fontFamily;
 }
 
+/*** Header ***/
 header {
 	width: $headerWidth;
 	margin: $headerMargin;
@@ -71,6 +73,7 @@ header {
 	margin: 10px;
 }
 
+/*** Nav, Footer ***/
 nav, footer {
 	color: $textAccentColor;
 	background: $logoTextColor;
@@ -82,6 +85,15 @@ nav span {
 	padding-right: 20px;
 }
 
+footer {
+	text-align: right;
+}
+
+footer a {
+	color: $textAccentColor;
+}
+
+/*** Main Area ***/
 main {
 	padding: 30px;
 }
@@ -108,19 +120,12 @@ main {
 	cursor: pointer;
 }
 
-footer {
-	text-align: right;
-}
-
-footer a {
-	color: $textAccentColor;
-}
-
 /*** Form Elements ***/
 button {
 	min-width: $buttonMinWidth;
 	color: $textColor;
 	background: $buttonBG;
+	margin: $buttonMargin;
 	padding: $buttonPadding;
 	border-right: $buttonShadow;
 	border-bottom: $buttonShadow;
@@ -158,4 +163,56 @@ input {
 
 input:focus {
 	border: solid 2px $accentColor;
+}
+
+/*** Responsive ***/
+@media (max-width: 1020px) {
+	header {
+		width: 100%;
+	}
+}
+
+@media (max-width: 820px) {
+	.logo-container, .login-logout-container {
+		display: block;
+	}
+
+	.logo-container {
+		text-align: center;
+		width: 100%;
+	}
+
+	.freezer-contents {
+		width: 70%;
+	}
+}
+
+@media (max-width: 650px) {
+	.freezer-contents {
+		width: auto;
+	}
+}
+
+@media (max-width: 430px) {
+	.message-box {
+		width: auto;
+	}
+
+	.logo-text {
+		font-size: 2.5em;
+	}
+}
+
+@media (max-width: 380px) {
+	.logo-text {
+		margin: 0;
+	}
+
+	.login-logout-container {
+		margin: 0 10px;
+	}
+
+	main {
+		padding: 20px;
+	}
 }
