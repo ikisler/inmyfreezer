@@ -49,7 +49,7 @@ var ViewModel = function() {
 	this.error = ko.observable();
 
 	/*** Rotating Food Names Effect ***/
-	this.rotateFoodArray = ['package of vegetables', 'chub of beef', 'chicken stock', 'frozen pizza'];
+	this.rotateFoodArray = ['broccoli', 'chub of beef', 'chicken stock', 'frozen pizza'];
 	this.rotateFoodCounter = 1;
 	this.rotateFoodsText = ko.observable(that.rotateFoodArray[0]); // Start with the first food
 
